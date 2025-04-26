@@ -545,6 +545,13 @@
                         "url": "http://resepti.kanta.fi/fhir/StructureDefinition/extension/dosageInfo"
                     },
                     {
+                        "url": "http://resepti.kanta.fi/fhir/StructureDefinition/extension/adverseEffect",
+                        "valueCoding": {
+                            "code": "M54.9",
+                            "system": "urn:oid:1.2.246.537.6.1.1999"
+                        }
+                    },
+                    {
                         "url": "http://resepti.kanta.fi/fhir/StructureDefinition/extension/structuredIndication",
                         "valueCoding": {
                             "code": "I10",
