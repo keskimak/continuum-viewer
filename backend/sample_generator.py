@@ -65,7 +65,8 @@ class SampleGenerator:
 
 @staticmethod
 def is_medication_request(entry) -> bool:
-    return entry.get("resource", {}).get("resourceType") == "MedicationRequest"
+    resource_type = entry.get("resource", {}).get("resourceType")
+    return resource_type == "MedicationRequest" or resource_type == "List"
 
 def insert_adverse_effects(entry):
     extension_dict =MedicationListParser.build_extension_dict(entry)

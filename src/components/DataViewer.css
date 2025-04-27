@@ -103,3 +103,138 @@
 .error {
     color: #f44336;
 }
+
+.action-buttons {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 20px;
+    background-color: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.action-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    background-color: #f0f0f0;
+    color: #333;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.action-button:hover {
+    background-color: #e0e0e0;
+}
+
+.action-button.active {
+    background-color: #2196f3;
+    color: white;
+}
+
+.details-panel {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.detail-item {
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: white;
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.detail-item h3 {
+    margin: 0 0 10px 0;
+    color: #333;
+}
+
+.detail-item ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.detail-item li {
+    padding: 8px 0;
+    border-bottom: 1px solid #eee;
+    color: #666;
+}
+
+.detail-item li:last-child {
+    border-bottom: none;
+}
+
+.medication-item {
+    background-color: white;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.medication-item h2 {
+    margin: 0 0 10px 0;
+    color: #333;
+    font-size: 1.2em;
+}
+
+.detail-section {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+}
+
+.detail-section h3 {
+    color: #666;
+    font-size: 1.1em;
+    margin-bottom: 10px;
+}
+
+.detail-section ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.detail-section li {
+    padding: 8px 0;
+    color: #666;
+    border-bottom: 1px solid #f5f5f5;
+}
+
+.detail-section li:last-child {
+    border-bottom: none;
+}
+
+.medication-details {
+    margin-bottom: 15px;
+}
+
+.detail-row {
+    display: flex;
+    margin-bottom: 8px;
+    align-items: baseline;
+}
+
+.detail-label {
+    font-weight: 500;
+    color: #666;
+    min-width: 120px;
+    margin-right: 10px;
+}
+
+.detail-value {
+    color: #333;
+    flex: 1;
+}

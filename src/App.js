@@ -1,11 +1,13 @@
 import React from 'react';
 import './App.css';
-import DataViewer from './components/DataViewer';
+import MedicationsViewer from './components/MedicationsViewer';
+import OverviewViewer from './components/OverviewViewer';
 
 function App() {
   return (
     <div className="App">
-      <DataViewer />
+      {/* <MedicationsViewer /> */}
+      <OverviewViewer />
     </div>
   );
 }
