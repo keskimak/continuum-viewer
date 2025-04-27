@@ -1,0 +1,95 @@
+.medication-tree-container {
+    padding: 30px;
+    font-family: 'Inter', 'Arial', sans-serif;
+    background-color: #f3f4f6;
+    /* light grey background */
+    min-height: 100vh;
+}
+
+.patient-id {
+    margin-bottom: 30px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #111827;
+}
+
+.medicine-section {
+    margin-bottom: 20px;
+}
+
+.medicine-button {
+    background-color: #ffffff;
+    border: 1px solid #d1d5db;
+    padding: 16px;
+    width: 100%;
+    text-align: left;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    margin-bottom: 10px;
+    transition: all 0.2s ease;
+}
+
+.medicine-button:hover {
+    background-color: #f9fafb;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.medicine-details {
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+.part-section {
+    margin-bottom: 10px;
+}
+
+.part-button {
+    background-color: #f9fafb;
+    border: 1px solid #e5e7eb;
+    padding: 14px;
+    width: 95%;
+    text-align: left;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    border-radius: 10px;
+    margin-bottom: 8px;
+    transition: all 0.2s ease;
+}
+
+.part-button:hover {
+    background-color: #f3f4f6;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.requests-list {
+    margin-top: 10px;
+    margin-left: 20px;
+}
+
+.request-card {
+    background-color: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    transition: box-shadow 0.2s;
+}
+
+.request-card:hover {
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+}
+
+.request-card p {
+    margin: 6px 0;
+    font-size: 14px;
+    color: #374151;
+}
+
+.request-card strong {
+    color: #111827;
+}

@@ -8,16 +8,20 @@ from extension_urls import get_extension_url, FHIR_SERVER_BASE, MEDICATION_LIST_
 from typing import Dict, Any
 
 class MedicationListParser:
-    def __init__(self, file_path: str = "examples/sample_data.json"):
+    def __init__(self, file_path: str = "examples/sample_data_filtered.json"):
         self.file_path = file_path
-        self.medication_requests = []
-        self.continuums = []
+        self.medication_requests = {}
+        self.continuums = {}
         self.grouped_by_medicine_id = []
         self.grouped_by_medicine_id_and_medicine_id_part = []
+        self.laakityslista = {"patient_id": "050566-909R"}
 
     def get_medication_requests(self):
         return self.medication_requests
     
+    def get_laakityslista(self):
+        return self.laakityslista
+
     def get_grouped_by_medicine_id(self):
         print("Grouped by medicine id: ", self.grouped_by_medicine_id)
         return self.grouped_by_medicine_id
@@ -39,15 +43,15 @@ class MedicationListParser:
             else:
                 bundle_data = data
                 
-            lists = []
-            medication_requests = []
-            
+            bundle_medicine_ids = {}
+            bundle_medicine_id_parts = {}
+            medication_requests = {}
+            bundle_info = {
+                "medicine_id": {},
+                "patient_id": "050566-909R"
+            }
             # Extract only MedicationRequest resources
-            medication_requests = []
             for entry in bundle_data.get("entry"):
-                if entry.get("resource").get("resourceType") == "List":
-                    lists.append(entry.get("resource"))
- 
                     
                 if entry.get("resource").get("resourceType") == "MedicationRequest":
                     mr = entry.get("resource")
@@ -57,6 +61,7 @@ class MedicationListParser:
                     medicine_id_part = None
                     adverse_effects = []
                     indications = []
+                    newest = False
                     # Build extension dictionary for easier access
                     ext_dict = self.build_extension_dict(mr)
                     # Group by medicine id and medicine id part
@@ -69,7 +74,10 @@ class MedicationListParser:
                                 medicine_id = medicine_id.replace("urn:oid:", "")
                             if ext.get("url") == MEDICATION_REQUEST_EXTENSIONS.get("MEDICINE_ID_PART"):
                                 medicine_id_part = ext.get("valuePositiveInt")
-                    
+                                print("medicine_id_part: ", medicine_id_part)
+                            if ext.get("url") == "newest":
+                                newest = ext.get("valueBoolean")
+                                print("newest: ", newest)
                     adverse_effect_ext = ext_dict.get(MEDICATION_REQUEST_EXTENSIONS.get("ADVERSE_EFFECTS"))
                     if adverse_effect_ext:
                         adverse_effects.append(adverse_effect_ext.get("valueCoding"))
@@ -78,8 +86,21 @@ class MedicationListParser:
                     if indication_ext:
                         indications.append(indication_ext.get("valueCoding"))
                             
-                            
-                    medication_requests.append({
+                    contained = mr.get("contained")
+                    for item in contained:
+                        if item.get("resourceType") == "Medication":
+                            medication = item
+                            atc_code = medication.get("code").get("coding")[0].get("code")
+                            atc_display = medication.get("code").get("coding")[0].get("display")
+                            extension = medication.get("extension")
+                            for ext in extension:
+                                if ext.get("url") == "http://resepti.kanta.fi/StructureDefinition/extension/pharmaceuticalProductStrength":
+                                    strength = ext.get("valueString")
+                            medication["strength"] = strength
+                            medication["atc_code"] = atc_code
+                            medication["atc_display"] = atc_display
+                    
+                    medication_requests = mr_id,{
                         "id": mr_id,
                         "medicine_id": medicine_id,
                         "medicine_id_part": medicine_id_part,
@@ -88,14 +109,31 @@ class MedicationListParser:
                         # FHIR resource
                         "medication_request": mr,
                         "adverse_effects": adverse_effects,
-                        "indications": indications
-                    })
-                    print("Medication request added: ", mr_id, medicine_id, medicine_id_part)
+                        "indications": indications,
+                        
+                        "medication": medication
+                    }
+                    print("bundle_info: ", bundle_info)
+                    # Step 1: Make sure medicineId exists
+                    if medicine_id not in bundle_info["medicine_id"]:
+                        bundle_info["medicine_id"][medicine_id] = {
+                            "atc_code": medication.get("atc_code"),
+                            "atc_display": medication.get("atc_display"),
+                            "medicine_id_part": {}   # <-- MUST be dict
+                        }
 
+                    if medicine_id_part not in bundle_info["medicine_id"][medicine_id]["medicine_id_part"]:
+                        bundle_info["medicine_id"][medicine_id]["medicine_id_part"][medicine_id_part] = []
+                        
+
+                    bundle_info["medicine_id"][medicine_id]["medicine_id_part"][medicine_id_part].append(mr)
+                    self.laakityslista = bundle_info
                     # self.validate_resources(resource)
-            print("Parser: Medication requests: ", len(medication_requests))       
+            print("Parser: Medication requests: ", len(medication_requests)) 
+            
+            print(self.laakityslista)     
             self.medication_requests = medication_requests
-            self.group_medication_requests()
+            
         except FileNotFoundError:
             raise FileNotFoundError(f"File not found: {self.file_path}")
         except json.JSONDecodeError:
@@ -119,100 +157,5 @@ class MedicationListParser:
         )
         print(response.json())
 
-    def get_all_continuums(self):
-        return [continuum.to_dict() for continuum in self.continuums]
-    
-    def group_medication_requests(self):
-        print("Grouping medication requests")
-        # Step 1: Group by medicineId
-        medicines = {}  # medicineId -> MedicineInUse
-        continuums = []
-        medication_requests = self.get_medication_requests()
-        for mr in medication_requests:
-            print("Grouping medication request: ", mr.get("id"))
-            # Assume continuum info is inside extensions or attributes
-            med_id = mr.get('medicine_id')  # eg. urn:oid:1.2.246.10.11111111.93001.2024.12345678
-            med_part = mr.get('medicine_id_part')  # eg. 9876543210
-            print("med_id: ", med_id)
-            if med_id is None or med_part is None:
-                continue  # skip if missing
-
-            # Create MedicineInUse if not already created
-            if med_id not in medicines:
-                medicine = {
-                    "medicine_id": med_id,
-                    "continuums": []
-                }
-                print("medicineinuse created")
-                medicines[med_id] = medicine
-
-            else:
-                medicine = medicines[med_id]
-
-            # Find matching Continuum by medicineIdPart
-            continuum = next((c for c in medicine.get("continuums") if c.get("medicine_id_part") == med_part), None)
-
-            if continuum is None:
-                continuum = {
-                    "medicine_id_part": med_part,
-                    "medication_requests": []
-                }
-                print("continuum created")
-                medicine.get("continuums").append(continuum)
-                continuums.append(continuum)
-
-            continuum.get("medication_requests").append(mr)
-
-        self.grouped_by_medicine_id = list(medicines.values())  # list of MedicineInUse objects
-        self.continuums = continuums
-
-class Continuum:
-    all_instances = []  # Class variable to store all instances
-
-    def __init__(self):
-        self.medicine_id_part = None
-        self.medication_requests = []
-        Continuum.all_instances.append(self)  # Add this instance to the list
-
-    @classmethod
-    def get_all_instances(cls):
-        return cls.all_instances
-
-    def add_medication(self, medication_request):
-        self.medication_requests.append(medication_request)
-        
-    def to_dict(self):
-        return {
-            "medicine_id_part": self.medicine_id_part,
-            "medication_requests": self.medication_requests,
-            # add other fields as needed
-        }
-
-class MedicineInUse:
-    def __init__(self):
-        self.medicine_id = None
-        self.continuums = []
-        
-    def add_continuum(self, continuum):
-        self.continuums.append(continuum)
-        
-    def get_continuums(self):
-        return self.continuums
-    
-    def to_dict(self):
-        return {
-            "medicine_id": self.medicine_id,
-            "continuums": [continuum.to_dict() for continuum in self.continuums]
-        }
-        
-class MedicationList:
-    def __init__(self):
-        self.medicationlist = []
-        
-    def add_medication_in_use(self, medication_in_use):
-        self.medicationlist.append(medication_in_use)
-        
-    def get_medicationlist(self):
-        return self.medicationlist
         
         

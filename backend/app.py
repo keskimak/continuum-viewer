@@ -11,7 +11,7 @@ PATH_TO_EXAMPLE_DATA = "examples/sample_data_filtered.json"
 def get_medication_history():
     parser = MedicationListParser(file_path=PATH_TO_EXAMPLE_DATA)
     parser.parse_json_data(None)
-    data = parser.get_grouped_by_medicine_id()
+    data = parser.get_laakityslista()
     print("data: ", data)
     return jsonify(data) 
 

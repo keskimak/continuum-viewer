@@ -64,8 +64,16 @@ def test_sample_data_with_parser():
         print("authoredOn: ", m.get("authoredOn"))
         print("---")
 
-
+def test_laakityslista():
+    print("  ")
+    print("Testing laakityslista")
+    print("  ")
+    parser = MedicationListParser(file_path="examples/sample_data.json")
+    parser.parse_json_data(None)
+    laakityslista = parser.get_laakityslista()
+    print("Laakityslista: ", laakityslista)
 if __name__ == "__main__":
    # main()
-    test_sample_generator()
-    test_sample_data_with_parser()
+ #  test_sample_generator()
+  #  test_sample_data_with_parser()
+    test_laakityslista()

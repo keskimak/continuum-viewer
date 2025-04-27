@@ -51,7 +51,10 @@
                                 "http://resepti.kanta.fi/fhir/StructureDefinition/MedicationListMedication"
                             ]
                         },
-                        "resourceType": "Medication"
+                        "resourceType": "Medication",
+                        "strength": "10 mg",
+                        "atc_code": "C09AA05",
+                        "atc_display": "ramipriili"
                     },
                     {
                         "amount": {
@@ -741,7 +744,10 @@
                                 "http://resepti.kanta.fi/fhir/StructureDefinition/MedicationListMedication"
                             ]
                         },
-                        "resourceType": "Medication"
+                        "resourceType": "Medication",
+                        "strength": "10 mg",
+                        "atc_code": "C09AA05",
+                        "atc_display": "ramipriili"
                     },
                     {
                         "code": {
@@ -992,7 +998,7 @@
                 "subject": {
                     "reference": "#3"
                 },
-                "authoredOn": "10/29/2024 06:40:40"
+                "authoredOn": "10/31/2021 06:55:19"
             }
         },
         {
@@ -1046,7 +1052,10 @@
                                 "http://resepti.kanta.fi/fhir/StructureDefinition/MedicationListMedication"
                             ]
                         },
-                        "resourceType": "Medication"
+                        "resourceType": "Medication",
+                        "strength": "600 mg",
+                        "atc_code": "M01AE01",
+                        "atc_display": "ibuprofeeni"
                     },
                     {
                         "amount": {
@@ -1727,7 +1736,10 @@
                                 "http://resepti.kanta.fi/fhir/StructureDefinition/MedicationListMedication"
                             ]
                         },
-                        "resourceType": "Medication"
+                        "resourceType": "Medication",
+                        "strength": "600 mg",
+                        "atc_code": "M01AE01",
+                        "atc_display": "ibuprofeeni"
                     },
                     {
                         "code": {
@@ -1978,7 +1990,7 @@
                 "subject": {
                     "reference": "#3"
                 },
-                "authoredOn": "11/15/2023 06:57:33"
+                "authoredOn": "03/13/2023 11:30:38"
             }
         },
         {
@@ -2032,7 +2044,10 @@
                                 "http://resepti.kanta.fi/fhir/StructureDefinition/MedicationListMedication"
                             ]
                         },
-                        "resourceType": "Medication"
+                        "resourceType": "Medication",
+                        "strength": "10 mg",
+                        "atc_code": "C10AA05",
+                        "atc_display": "atorvastatiini"
                     },
                     {
                         "amount": {
@@ -2632,7 +2647,7 @@
                 "mode": "working",
                 "resourceType": "List",
                 "status": "current",
-                "authoredOn": "06/09/2020 10:11:58"
+                "authoredOn": "03/23/2021 18:29:09"
             }
         },
         {
@@ -2685,7 +2700,7 @@
                 "mode": "working",
                 "resourceType": "List",
                 "status": "current",
-                "authoredOn": "05/20/2021 07:42:07"
+                "authoredOn": "08/19/2022 19:55:56"
             }
         },
         {
@@ -2726,7 +2741,7 @@
                 "mode": "working",
                 "resourceType": "List",
                 "status": "current",
-                "authoredOn": "09/10/2024 12:21:28"
+                "authoredOn": "08/05/2020 13:36:33"
             }
         }
     ],

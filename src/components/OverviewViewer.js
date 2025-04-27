@@ -29,12 +29,14 @@ const OverviewViewer = () => {
             <h1>Medication History</h1>
             <div className="medication-list">
                 {data.map((medicationlist) => (
-                    <div key={medicationlist.id} className="medication-item">
-                        <div className="medication-details">
-                            <div className="detail-row">
-                                <span className="detail-label">Medicine Id:</span>
-                                <span className="detail-value">{medicationlist}</span>
-                            </div>
+                    <div key={medicationlist.medicine_id} className="medication-item">
+                        <div className="medication-item">
+                            <span className="detail-label">Date:</span>
+                            <span className="detail-value">{medicationlist.medicine_id}</span>
+                            {medicationlist.continuums.map((continuum) => (
+                                <div key={continuum.medicine_id_part} className="medication-item">
+                                </div>
+                            ))}
                         </div>
 
                     </div>
