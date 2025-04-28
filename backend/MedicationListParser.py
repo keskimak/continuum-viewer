@@ -37,7 +37,7 @@ class MedicationListParser:
         try:
             
             if data is None:
-                with open(self.file_path, 'r') as file:
+                with open(self.file_path, 'r', encoding='utf-8') as file:
                     print("Parsing JSON data from file: ", self.file_path)
                     bundle_data = json.load(file)
             else:

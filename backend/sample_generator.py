@@ -8,7 +8,7 @@ class SampleGenerator:
     def __init__(self, file_path: str = "examples/sample_data.json"):
         self.file_path = file_path
         self.filtered_data = None
-
+    
     def return_filtered_data_from_file(self):
         with open("examples/sample_data_filtered.json", 'r') as file:
             return json.load(file)
@@ -23,7 +23,7 @@ class SampleGenerator:
         Returns the parsed data as a dictionary.
         """
         try:
-            with open(self.file_path, 'r') as file:
+            with open(self.file_path, 'r', encoding='utf-8') as file:
                 
                 bundle_data = json.load(file)
                 # Filter out MedicationDispense entries from the bundle data

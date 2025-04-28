@@ -74,6 +74,6 @@ def test_laakityslista():
     print("Laakityslista: ", laakityslista)
 if __name__ == "__main__":
    # main()
- #  test_sample_generator()
+    test_sample_generator()
   #  test_sample_data_with_parser()
-    test_laakityslista()
+    #test_laakityslista()
